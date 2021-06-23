@@ -1,0 +1,18 @@
+{
+  "name": "benchmark-orm",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "typeorm": "node src/index.js typeorm",
+    "sequelize": "node src/index.js sequelize"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "faker": "^5.5.3",
+    "mssql": "^7.1.3",
+    "typeorm": "^0.2.34"
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0"
+  }
+}
