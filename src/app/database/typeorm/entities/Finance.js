@@ -1,34 +1,34 @@
 const { EntitySchema } = require('typeorm');
 
 module.exports = new EntitySchema({
-  name: "Address",
-  tableName: "addresses",
+  name: 'Finance',
+  tableName: 'Finances',
   columns: {
     FinanceId: {
       primary: true,
-      type: "int",
+      type: 'int',
       generated: true,
     },
     UserId: {
-      type: "varchar",
+      type: 'varchar',
     },
     Account: {
-      type: "varchar"
+      type: 'varchar',
     },
     AccountName: {
-      type: "varchar"
+      type: 'varchar',
     },
     Amount: {
-      type: "varchar"
+      type: 'varchar',
     },
     CreditCardNumber: {
-      type: "varchar"
+      type: 'varchar',
     },
     CreditCardCVV: {
-      type: "varchar"
+      type: 'varchar',
     },
     BitcoinAddress: {
-      type: "varchar"
+      type: 'varchar',
     },
   },
   relations: {
@@ -37,6 +37,6 @@ module.exports = new EntitySchema({
       type: 'one-to-many',
       joinTable: true,
       cascade: true,
-    }
-  }
+    },
+  },
 });

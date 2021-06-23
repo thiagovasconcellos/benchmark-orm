@@ -1,31 +1,31 @@
 const { EntitySchema } = require('typeorm');
 
 module.exports = new EntitySchema({
-  name: "Address",
-  tableName: "addresses",
+  name: 'Address',
+  tableName: 'Addresses',
   columns: {
     AddressId: {
       primary: true,
-      type: "int",
+      type: 'int',
       generated: true,
     },
     UserId: {
-      type: "varchar",
+      type: 'varchar',
     },
     StreetName: {
-      type: "varchar"
+      type: 'varchar',
     },
     City: {
-      type: "varchar"
+      type: 'varchar',
     },
     County: {
-      type: "varchar"
+      type: 'varchar',
     },
     AddressState: {
-      type: "varchar"
+      type: 'varchar',
     },
     Country: {
-      type: "varchar"
+      type: 'varchar',
     },
   },
   relations: {
@@ -34,6 +34,6 @@ module.exports = new EntitySchema({
       type: 'one-to-many',
       joinTable: true,
       cascade: true,
-    }
-  }
+    },
+  },
 });

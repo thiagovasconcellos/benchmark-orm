@@ -1,40 +1,35 @@
-const { createConnection, getRepository } = require('typeorm');
+const { getRepository } = require('typeorm');
+const ora = require('ora');
+
 const User = require('../app/database/typeorm/entities/User');
+const Address = require('../app/database/typeorm/entities/Address');
+const Finance = require('../app/database/typeorm/entities/Finance');
 
 const createFakeUser = require('../seeds/createUser');
 
+const spinner = ora().start();
+
 module.exports = async function typeorm() {
-  console.time('TypeORM Benchmark took:');
-  console.time('Create connection took:');
-  console.time('Create fake users took:');
-  console.time('Persist fake users to db took:');
-  const connection = await createConnection({
-    type: "mssql",
-    host: "192.168.99.100",
-    username: "sa",
-    port: 1433,
-    password: "S{%UtP4th+D`*cE9",
-    database: "NEWSPACE",
-    entities: [
-      User
-    ]
-
-  });
-  console.timeEnd('Create connection took:');
-
   const numberOfUsers = Number(process.env.AMOUNT_USERS_FAKE_DATA);
-  console.log(`Creating ${numberOfUsers} diferent users`);
+
+  numberOfUsers >= 1000
+    ? console.log(`WTF?! ${numberOfUsers} unique users at once!!!`)
+    : console.log(`Creating ${numberOfUsers}`);
   const fakeUsers = createFakeUser(numberOfUsers);
-  console.timeEnd('Create fake users took:');
 
-  const userRepository = connection.getRepository(User);
+  const userRepository = getRepository(User);
+  const addressRepository = getRepository(Address);
+  const financeRepository = getRepository(Finance);
 
-  console.log('Inserting users to MSSQL');
+  spinner.text = 'Saving users to database...';
+  spinner.color = 'blue';
 
   for (const user of fakeUsers) {
     await userRepository.save(user);
+    await addressRepository.save(user.Address);
+    await financeRepository.save(user.Finance);
   }
-  console.timeEnd('Persist fake users to db took:');
 
-  console.timeEnd('TypeORM Benchmark took:');
-}
+  spinner.succeed('Saved!');
+  console.log('Wait till is done...');
+};
